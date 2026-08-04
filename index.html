@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nicole Plummer — Mezzo-Soprano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&family=Cormorant:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --ivory: #fdfcfa;
+    --blush: #f9e8ee;
+    --lavender: #ede8f5;
+    --sky: #e4eff8;
+    --pink: #e8a0b4;
+    --pink-deep: #c9708a;
+    --lavender-deep: #9b8ec4;
+    --sky-deep: #7aaed4;
+    --text: #2d2630;
+    --text-mid: #6b5f70;
+    --text-light: #a89fad;
+    --border: rgba(200,160,180,0.2);
+    --border-strong: rgba(200,160,180,0.45);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 64px;
+    background: rgba(253,252,250,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.03em;
+    color: var(--text); text-decoration: none; cursor: pointer;
+  }
+  .nav-logo span { color: var(--pink-deep); font-style: italic; }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-mid); text-decoration: none;
+    transition: color 0.3s; position: relative; cursor: pointer;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--pink);
+    transform: scaleX(0); transition: transform 0.3s ease; transform-origin: left;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--pink-deep); }
+  .nav-links a.active::after,
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* PAGE SYSTEM */
+  .page { display: none; min-height: calc(100vh - 73px); margin-top: 73px; }
+  .page.active { display: block; animation: pageIn 0.35s ease forwards; }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SHARED */
+  .page-content { max-width: 1200px; margin: 0 auto; padding: 80px 64px; }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--pink-deep); margin-bottom: 16px;
+  }
+  .section-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--pink); }
+  .section-eyebrow::after { content: ''; width: 24px; height: 1px; background: var(--pink); }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 600;
+    color: var(--text); line-height: 1.15; margin-bottom: 12px;
+  }
+  .section-sub {
+    font-family: 'Cormorant', serif; font-style: italic;
+    font-size: 1.15rem; color: var(--text-mid); margin-bottom: 56px;
+  }
+
+  /* HOME */
+  #page-home {
+    min-height: calc(100vh - 73px);
+    height: calc(100vh - 73px);
+    display: flex; align-items: center;
+    padding: 60px 64px;
+    position: relative; overflow: hidden;
+    background-color: #0d1a18;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 30%;
+  }
+  #page-home::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(13,26,24,0.88) 0%, rgba(13,26,24,0.65) 45%, rgba(13,26,24,0.0) 75%), radial-gradient(ellipse at 30% 60%, rgba(232,160,180,0.35) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(180,140,220,0.25) 0%, transparent 50%);
+    z-index: 2;
+  }
+  #page-home .hero-inner { position: relative; z-index: 5; }
+  .shape {
+    position: absolute; border-radius: 50%;
+    filter: blur(60px); opacity: 0.45; pointer-events: none;
+  }
+  .shape-1 { width: 500px; height: 500px; background: #f5c6d8; top: -100px; right: -80px; }
+  .shape-2 { width: 350px; height: 350px; background: #d4c8f0; bottom: 0; left: 40%; }
+  .shape-3 { width: 280px; height: 280px; background: #b8d8f0; top: 30%; left: -60px; opacity: 0.3; }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 700px; margin: 0 auto 0 0; width: 100%;
+    display: block;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--pink-deep); margin-bottom: 24px;
+  }
+  .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--pink); }
+  .hero-eyebrow::after { content: ''; width: 32px; height: 1px; background: var(--pink); }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 700; line-height: 1.0;
+    color: #ffffff; margin-bottom: 8px;
+  }
+  .hero-name-last {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 400; font-style: italic;
+    color: var(--pink); line-height: 1.0; margin-bottom: 28px;
+  }
+  .hero-tagline {
+    font-family: 'Cormorant', serif; font-style: italic;
+    font-size: 1.3rem; color: rgba(255,255,255,0.8); line-height: 1.6;
+    margin-bottom: 40px; font-weight: 300;
+  }
+  .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 44px; }
+  .tag {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border-strong);
+    color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.25);
+  }
+  .hero-actions { display: flex; gap: 16px; }
+  .btn-primary {
+    display: inline-block; font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--white);
+    background: var(--pink-deep); text-decoration: none; padding: 15px 36px;
+    border-radius: 2px; transition: all 0.3s; border: 1.5px solid var(--pink-deep); cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--pink); border-color: var(--pink); }
+  .btn-secondary {
+    display: inline-block; font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #ffffff;
+    text-decoration: none; padding: 15px 36px; border-radius: 2px;
+    border: 1.5px solid var(--lavender-deep);
+    background: rgba(255,255,255,0.18); transition: all 0.3s; cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: var(--lavender-deep); background: rgba(255,255,255,0.32); color: #ffffff; }
+
+  /* ABOUT */
+  #page-about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+  .about-image {
+    width: 100%; aspect-ratio: 3/4;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 20px 60px rgba(180,120,150,0.14);
+    color: var(--pink-deep); font-family: 'Cormorant', serif;
+    font-style: italic; font-size: 0.95rem;
+    position: sticky; top: 100px;
+    filter: brightness(0.82) contrast(1.05);
+  }
+  .about-lead {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 1.3rem; line-height: 1.7; color: var(--text);
+    margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border);
+  }
+  .about-body { font-size: 1.0rem; line-height: 1.95; color: var(--text-mid); margin-bottom: 18px; }
+  .about-highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .highlight-card {
+    padding: 16px 18px; background: var(--ivory);
+    border: 1px solid var(--border); border-radius: 2px; transition: border-color 0.3s;
+  }
+  .highlight-card:hover { border-color: var(--border-strong); }
+  .highlight-label { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pink-deep); margin-bottom: 6px; }
+  .highlight-value { font-family: 'Playfair Display', serif; font-size: 0.88rem; color: var(--text); line-height: 1.6; }
+
+  /* GALLERY */
+  #page-gallery { background: linear-gradient(160deg, var(--lavender) 0%, var(--blush) 50%, var(--sky) 100%); }
+  .gallery-grid {
+    columns: 2;
+    column-gap: 14px;
+    column-fill: balance;
+  }
+  .gallery-item {
+    break-inside: avoid;
+    border-radius: 4px; overflow: hidden; position: relative; cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    margin-bottom: 14px;
+    display: block;
+    line-height: 0;
+  }
+  .gallery-item img { width: 100%; height: auto; display: block; }
+  .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(150,100,130,0.2); }
+
+  /* MEDIA */
+  #page-media { background: var(--white); }
+  .media-layout { display: flex; flex-direction: column; gap: 48px; }
+  .video-hover-title {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px 24px 16px;
+    background: linear-gradient(to top, rgba(45,20,35,0.92) 0%, transparent 100%);
+    color: var(--white);
+    font-family: 'Cormorant', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    text-shadow: 0 0 20px rgba(232,160,180,0.8), 0 0 40px rgba(232,160,180,0.4);
+    z-index: 3;
+  }
+  a:hover .video-hover-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* CONTACT */
+  #page-contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
+  .contact-bio { font-size: 1.0rem; line-height: 1.9; color: var(--text-mid); margin-bottom: 40px; }
+  .contact-details { display: flex; flex-direction: column; gap: 20px; }
+  .cd-item { display: flex; gap: 16px; align-items: flex-start; }
+  .cd-icon { width: 38px; height: 38px; min-width: 38px; background: var(--blush); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: var(--pink-deep); font-size: 0.9rem; }
+  .cd-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pink-deep); margin-bottom: 2px; }
+  .cd-value { font-size: 0.95rem; color: var(--text); }
+  .contact-form { display: flex; flex-direction: column; gap: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group label { display: block; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 7px; }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; background: var(--ivory); border: 1px solid var(--border-strong); border-radius: 2px;
+    color: var(--text); padding: 12px 16px; font-family: 'Jost', sans-serif;
+    font-size: 0.95rem; font-weight: 300; outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s; appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(232,160,180,0.15); }
+  .form-group textarea { height: 130px; resize: vertical; }
+  .btn-submit {
+    font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase; color: white; background: var(--pink-deep);
+    border: none; padding: 16px 40px; cursor: pointer; width: 100%; border-radius: 2px;
+    transition: all 0.3s; margin-top: 4px;
+  }
+  .btn-submit:hover { background: var(--pink); }
+
+  /* FOOTER */
+  footer { background: var(--text); padding: 40px 64px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-style: italic; color: rgba(255,255,255,0.8); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+  .footer-social { display: flex; gap: 24px; }
+  .soc { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.3s; }
+  .soc:hover { color: var(--pink); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--ivory); }
+  ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 2px; }
+
+  @media (max-width: 1024px) {
+    nav { padding: 18px 24px; }
+    .nav-links { gap: 18px; }
+    .page-content { padding: 48px 24px; }
+    #page-home { padding: 48px 24px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-image { display: none; }
+    .gallery-grid { columns: 1; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">Nicole <span>Plummer</span> | Mezzo-Soprano</a>
+  <ul class="nav-links">
+    <li><a id="nav-home"    onclick="showPage('home')">Home</a></li>
+    <li><a id="nav-about"   onclick="showPage('about')">About</a></li>
+    <li><a id="nav-gallery" onclick="showPage('gallery')">Gallery</a></li>
+    <li><a id="nav-media"   onclick="showPage('media')">Media</a></li>
+    <li><a id="nav-contact" onclick="showPage('contact')">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div class="page" id="page-home">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-name">Nicole</div>
+      <div class="hero-name-last">Plummer</div>
+      <p class="hero-tagline">A Boston-based mezzo-soprano bringing depth, warmth,<br>and artistry to every role.</p>
+      <div class="hero-actions">
+        <a class="btn-primary"   onclick="showPage('media')">Listen Now</a>
+        <a class="btn-secondary" onclick="showPage('about')">Learn More</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="page-content">
+    <div class="about-grid">
+      <div class="about-image" style="background: linear-gradient(145deg, #f9e8ee, #ede8f5);">Portrait Photograph</div>
+      <div>
+        <div class="section-eyebrow">About Nicole</div>
+        <h2 class="section-title">A Voice Rooted in<br>Character & Craft</h2>
+        <p class="about-lead">Nicole Plummer is a Boston-based mezzo-soprano and recent graduate of the Maryland Opera Studio, where she received her Master of Music in Opera Performance studying with Delores Ziegler.</p>
+        <p class="about-body">A native of Brookline, New Hampshire, Nicole this past season was seen as Dorabella in <em>Così fan tutte</em> and Frau Reich in <em>Die lustigen Weiber von Windsor</em>. In 2023 and 2024, Nicole was an Emerging Artist with the Seagle Festival, performing as Ada in <em>Cold Mountain</em>, Maria Luisa in <em>With Blood, With Ink</em>, Jean MacLaren in <em>Brigadoon</em>, and covering Stephano in <em>Roméo et Juliette</em>.</p>
+        <p class="about-body">As a member of the Maryland Opera Studio, she premiered the role of Le Limbe in <em>Orgullo</em> and reprised the role at the Public Theater in New York City in September 2024. She received her Bachelor of Music in Vocal Performance and French from the Frost School of Music at the University of Miami, studying with Robynne Redmon, where she performed as Cherubino in <em>Le nozze di Figaro</em> and La Soeur Cadette in <em>Les Malheurs d'Orphée</em>.</p>
+        <p class="about-body">In July 2022, she was selected as a winner of the Mirabell Competition and performed in recital at the Schloss Mirabell in Salzburg, Austria. Most recently, she was awarded second place in the Wilkinson Young Singer's Fund competition and was a national runner-up in the NOA Opera Scenes Competition. Nicole is also active in the world of concert and choral singing; she was a two-year member of Seraphic Fire's Ensemble Artist program and has performed as the mezzo-soprano soloist in Matthew Coleridge's Requiem, BWV 214; Saint-Saëns' Oratorio de Noel; and Vivaldi's Magnificat. In the 2025–26 season, Nicole will be seen in recital as part of the Christ Church Concert Series in Alexandria, Virginia.</p>
+        <p class="about-body">In the summer of 2026, Nicole will be joining Central City Opera as an Apprentice Artist.</p>
+        <div class="about-highlights">
+          <div class="highlight-card">
+            <div class="highlight-label">Training</div>
+            <div class="highlight-value">Maryland Opera Studio, MM<br>Frost School of Music, BM</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-label">Teachers</div>
+            <div class="highlight-value">Delores Ziegler<br>Robynne Redmon</div>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-label">Competition</div>
+            <div class="highlight-value">Mirabell Competition Winner, 2022<br>Wilkinson Young Singers Fund, 2025<br>Annapolis Opera Vocal Competition Semi-Finalist, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="page" id="page-gallery">
+  <div class="page-content">
+    <div class="section-eyebrow">Gallery</div>
+    <h2 class="section-title">On Stage</h2>
+    <p class="section-sub">Moments from my performances</p>
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <img src="images/014FAD44-9FAE-445A-9524-23D442C61D13.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/1331C22F-417E-4161-8667-F35E218F6E08_1_105_c.jpeg" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/2A8F666D-D3B3-49EE-9FD9-F2BFD1650617.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/5296F4E9-DBCE-4FB5-9146-158852D340FC.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/61C9F24A-4E2F-4509-AC7E-0B4A68000734.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/6F9146E1-0360-4952-BCEF-F8EEB0D2C57B.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/7DA12A1B-60E7-4BEF-AF08-ACABDCBEB8DC.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/8F2E1408-97F9-4FCB-933E-C7EB795D16BB_1_105_c.jpeg" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/9E0C8EC4-B311-43B2-A40F-CC44729FC823.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/AE406EB5-8A9B-49D0-B3FA-C83DFBD58A71.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/B689BFC5-7B8E-47F4-99F9-C6D3CB7255B0.JPG" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/BB44642A-9151-4AC0-9EE1-83EE78A7AB67_1_105_c.jpeg" alt="Nicole Plummer">
+      </div>
+
+      <div class="gallery-item">
+        <img src="images/C828E883-28A1-4199-A7A7-6C5E4016AD42.JPG" alt="Nicole Plummer">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MEDIA -->
+<div class="page" id="page-media">
+  <div class="page-content">
+    <div class="section-eyebrow">Media</div>
+    <div class="media-layout">
+      <div>
+        <a href="https://www.youtube.com/watch?v=jqOj4TTPOXI" target="_blank" style="display:block;position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:4px;cursor:pointer;margin-bottom:24px;">
+          <div class="video-hover-title">"Ada's Aria (I Feel Sorry)" from <em>Cold Mountain</em> — Jennifer Higdon</div>
+          <img src="images/video-placeholder.jpg" alt="Watch Nicole Plummer perform" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);transition:background 0.3s;">
+            <div style="width:72px;height:72px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#c9708a;width:26px;margin-left:4px;"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=V2qPioBVDa0" target="_blank" style="display:block;position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:4px;cursor:pointer;margin-bottom:24px;">
+          <div class="video-hover-title">"Moments in the Woods" from <em>Into the Woods</em> — Stephen Sondheim</div>
+          <img src="images/video-placeholder.jpg" alt="Watch Nicole Plummer perform" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);transition:background 0.3s;">
+            <div style="width:72px;height:72px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#c9708a;width:26px;margin-left:4px;"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=pC2f7TVLvF8" target="_blank" style="display:block;position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:4px;cursor:pointer;margin-bottom:24px;">
+          <div class="video-hover-title">Una voce poco fa — <em>Il barbiere di Siviglia</em></div>
+          <img src="images/video-placeholder.jpg" alt="Watch Nicole Plummer perform" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);transition:background 0.3s;">
+            <div style="width:72px;height:72px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#c9708a;width:26px;margin-left:4px;"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=Zi2m_7nxzPM" target="_blank" style="display:block;position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:4px;cursor:pointer;margin-bottom:24px;">
+          <div class="video-hover-title">Goodbye, Little Dream, Goodbye — <em>Anything Goes</em></div>
+          <img src="images/video-placeholder.jpg" alt="Watch Nicole Plummer perform" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);transition:background 0.3s;">
+            <div style="width:72px;height:72px;background:rgba(255,255,255,0.92);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+              <svg viewBox="0 0 24 24" style="fill:#c9708a;width:26px;margin-left:4px;"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="page-content">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title">Bookings &<br>Enquiries</h2>
+        <p class="contact-bio">For performance bookings, collaborations, audition inquiries, and press, please reach out via the form or directly by email. I am currently based in Boston and available for engagements throughout the US and internationally.</p>
+        <div class="contact-details">
+          <div class="cd-value">nicolesplummer&#64;gmail&#46;com</div>
+        </div>
+      </div>
+      <div class="contact-form" id="contact-form">
+        <form action="https://formspree.io/f/xlgpvlbn" method="POST" style="display:flex;flex-direction:column;gap:18px;">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" name="first_name" placeholder="Your first name"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" name="last_name" placeholder="Your last name"></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="your@email.com"></div>
+          <div class="form-group">
+            <label>Enquiry Type</label>
+            <select name="enquiry_type">
+              <option value="">Select type…</option>
+              <option>Performance Booking</option>
+              <option>Collaboration</option>
+              <option>Press & Media</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message</label><textarea name="message" placeholder="Please describe your enquiry…"></textarea></div>
+          <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Nicole Plummer</div>
+  <div class="footer-copy">© 2026 Nicole Plummer. All rights reserved.</div>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/nicoleplummermezzo/" target="_blank" class="soc">Instagram</a>
+    <a href="https://www.youtube.com/@nicoleplummer9432" target="_blank" class="soc">YouTube</a>
+    <a href="https://www.linkedin.com/in/nicole-plummer-7984062b9/" target="_blank" class="soc">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const link = document.getElementById('nav-' + id);
+    if (link) link.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  const initPage = location.hash.replace('#', '') || 'home';
+  showPage(initPage);
+</script>
+</body>
+</html>
