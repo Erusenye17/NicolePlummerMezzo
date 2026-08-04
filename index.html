@@ -70,6 +70,7 @@
   /* PAGE SYSTEM */
   .page { display: none; min-height: calc(100vh - 73px); margin-top: 73px; }
   .page.active { display: block; animation: pageIn 0.35s ease forwards; }
+  #page-home.active { display: flex; }
 
   @keyframes pageIn {
     from { opacity: 0; transform: translateY(14px); }
@@ -99,7 +100,7 @@
   #page-home {
     min-height: calc(100vh - 73px);
     height: calc(100vh - 73px);
-    display: flex; align-items: center;
+    align-items: center;
     padding: 60px 64px;
     position: relative; overflow: hidden;
     background-color: #0d1a18;
